@@ -3,6 +3,9 @@ node_modules/
 /.pnp
 .pnp.js
 
+
+/backend/src/config
+
 # Production build
 /build
 /dist
