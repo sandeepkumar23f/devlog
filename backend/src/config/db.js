@@ -1,13 +1,13 @@
-import {MongoClient} from "mongodb"
+const mongoose = require("mongoose");
 
-const url = "mongodb+srv://Devlog:Devlog4321@cluster0.f2gjwjm.mongodb.net/Dev-Log?retryWrites=true&w=majority&appName=Cluster0";
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("MongoDB connected successfully!");
+  } catch (err) {
+    console.error("MongoDB connection error:", err.message);
+    process.exit(1);
+  }
+};
 
-const dbName = "Dev-Log"
-
-const client = new MongoClient(url)
-
-export const connection = async () => {
-    const connect = await client.connect()
-    console.log("MongoDB connected!")
-    return connect.db(dbName)
-}
+module.exports = connectDB;
