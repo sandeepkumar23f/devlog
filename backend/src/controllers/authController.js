@@ -53,7 +53,7 @@ export const SignUp = async (req, res) => {
                 sameSite: "none",
                 secure: true,
                 path: "/",
-                
+                maxAge: 5 * 24 * 60 * 60 * 1000
             });
 
             return res.status(201).json({
@@ -70,6 +70,9 @@ export const SignUp = async (req, res) => {
     } catch (error) {
         console.error(error);
 
-        
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
     }
 };
