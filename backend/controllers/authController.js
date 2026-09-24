@@ -8,7 +8,7 @@ export const SignUp = async (req, res) => {
     try {
         const userData = req.body;
 
-        if (!userData.email || !userData.password) {
+        if (!userData.name || !userData.email || !userData.password) {
             return res.status(400).json({
                 success: false,
                 message: "Email and password are required"
@@ -76,3 +76,40 @@ export const SignUp = async (req, res) => {
         });
     }
 };
+
+export const Login = async (req,res) => {
+    try{
+        const userData = req.body;
+        if(!userData.email || !userData.password){
+            return res.status(400).json({
+                success: false,
+                message: "email and password is required"
+            })
+        }
+
+        const db = await connection()
+        const collection = db.collection("users")
+
+        const result = collection.findOne({
+            email: userData.email,
+            password: userData.password
+        })
+        if(!result){
+            return res.status(401).json({
+                success: false,
+                message: "Invalid email or password"
+            })
+        }
+
+        return res.status(201).json({
+            success: true,
+            message: "Login Successfully..."
+        })
+    }
+    catch(error){
+        return res.status(500).json({
+            success: false,
+            message: "Server error please try again later"
+        })
+    }
+}
